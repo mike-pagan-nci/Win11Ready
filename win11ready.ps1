@@ -10,9 +10,9 @@
 $LocalPath = "C:\Images"
 
 # Create the share before running the script and then enter the path below
-$Share = "\\dns01\data\Win11Ready"
+$Share = "\\SERVER\SHARE\Win11Ready"
 
-# Create local folder if not exists
+# Create a local folder if it does not exist
 If (Test-Path -Path $LocalPath) {
 }
 else {
