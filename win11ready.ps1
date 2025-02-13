@@ -1,10 +1,14 @@
+#############################################################################################################################################
+####                                                       Script Inputs                                                                 ####
+#############################################################################################################################################
+
 # Folders check
 # Choose the local folder path and edit the code below to match the settings
 
 $LocalPath = "C:\Images"
 
 # Create the share before running the script and then enter the path below
-$Share = "\\SERVER\data\Win11Ready\"
+$Share = "\\dns01\data\Win11Ready"
 
 # Create local folder if not exists
 If (Test-Path -Path $LocalPath) {
@@ -22,19 +26,9 @@ else {
 }
 
 # Delete local results file if true
-TidyUP = $false
+$TidyUP = $false
 
-#############################################################################################################################################
-####                                                  Force Enable Windows Notifications                                                 ####
-#############################################################################################################################################
-<#
-$FileName = Get-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\PushNotifications\" -Name "ToastEnabled"
-If ($FileName.ToastEnabled -eq 0) {
-    Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\PushNotifications" -Name ToastEnabled -Value 1 -Force
-    Get-Service -Name WpnUserService* | Restart-Service -Force
-    Start-Sleep 10
-}
-#>
+
 #############################################################################################################################################
 ####                                                       Windows 11 Upgrade Check                                                      ####
 #############################################################################################################################################
@@ -526,13 +520,13 @@ If ($outObject.returnResult -eq "CAPABLE") {
     $outObject | Format-List | Out-File -FilePath $Capable -Append
 
     # If share exists, write results to share
-    if ($ShareMissing = $false) {
+    if ($ShareMissing -eq $false) {
         copy-item -Path $Capable -Destination $Share -Force
     }
 
     # If tidy up is true, clean up local results file
-    If ($TidyUP = $true) {
-        delete-Item -Path $Capable
+    If ($TidyUP -eq $true) {
+        remove-item -Path $Capable
     }
 }
 
@@ -542,12 +536,12 @@ If ($outObject.returnResult -eq "NOT CAPABLE") {
     $outObject | Format-List | Out-File -FilePath $NotCapable -Append
     
     # If share exists, write results to share
-    if ($ShareMissing = $false) {
+    if ($ShareMissing -eq $false) {
         copy-item -Path $NotCapable -Destination $Share
         }
 
     # If tidy up is true, clean up local results file
-    If ($TidyUP = $true) {
-        delete-Item -Path $Capable
+    If ($TidyUP -eq $true) {
+        remove-item -Path $NotCapable
     }
 }
