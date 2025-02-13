@@ -2,6 +2,8 @@
 ####                                                       Script Inputs                                                                 ####
 #############################################################################################################################################
 
+# Original Source: https://github.com/Tachaeon/Windows11Upgrade/blob/main/1.HardwareReadiness.ps1
+
 # Folders check
 # Choose the local folder path and edit the code below to match the settings
 
