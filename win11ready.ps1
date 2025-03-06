@@ -21,6 +21,7 @@ else {
 
 # Verify Share folder
 If (Test-Path -Path $Share) {
+    $ShareMissing = $false
 }
 else {
     Write-Host "Share missing. Collect local output."
